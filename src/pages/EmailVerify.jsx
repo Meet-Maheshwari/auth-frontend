@@ -9,7 +9,8 @@ const EmailVerify = () => {
   axios.defaults.withCredentials = true;
 
   const navigate = useNavigate();
-  const { isLoggedIn, userData, getUserData } = useContext(AppContent);
+  const { backendUrl, isLoggedIn, userData, getUserData } =
+    useContext(AppContent);
   const inputRefs = React.useRef([]);
 
   const handleInput = (e, index) => {
@@ -30,7 +31,10 @@ const EmailVerify = () => {
       const otpArray = inputRefs.current.map((e) => e.value);
       const otp = otpArray.join("");
 
-      const { data } = await axios.post("/api/auth/verify-account", { otp });
+      const { data } = await axios.post(
+        backendUrl + "/api/auth/verify-account",
+        { otp }
+      );
 
       if (data.success) {
         toast.success(data.message);
